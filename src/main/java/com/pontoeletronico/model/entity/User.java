@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.pontoeletronico.model.enums.UserRole;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,6 +26,7 @@ public class User implements UserDetails{
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
+    @Column(unique = true)
     private String email;
 
     private String password;
@@ -32,6 +34,8 @@ public class User implements UserDetails{
     private String name;
 
     private UserRole role;
+
+    private boolean enable;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -48,5 +52,11 @@ public class User implements UserDetails{
     public String getUsername() {
         return email;
     }
+
+    @Override
+    public boolean isEnabled() {
+        return enable;
+    }
+
 
 }
