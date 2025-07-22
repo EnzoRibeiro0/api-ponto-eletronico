@@ -1,5 +1,6 @@
 package com.pontoeletronico.model.entity;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 import com.pontoeletronico.model.enums.TimeClockStatus;
@@ -29,6 +30,8 @@ public class TimeClock {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    private LocalDate day;
 
     private LocalTime checkInTime;  
     

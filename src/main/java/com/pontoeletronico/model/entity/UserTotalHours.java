@@ -1,6 +1,6 @@
 package com.pontoeletronico.model.entity;
 
-import java.time.Duration;
+import java.time.LocalTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,7 +20,7 @@ public class UserTotalHours {
     private String id;
 
     @Column(name = "total_hours")
-    private Duration totalhours;
+    private LocalTime totalhours;
 
     @OneToOne   
     @MapsId // faz com que o id dessa tabela seja o mesmo o user_id
