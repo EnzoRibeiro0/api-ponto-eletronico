@@ -44,7 +44,7 @@ public class TimeClockService {
       
         Optional<TimeClock> timeclock = timeClockRepository.findLastTimeClockByUser(user.getId());
         
-        if(timeclock.get().getCheckOutTime() == null){
+        if(timeclock.get().getCheckOutTime() == null && timeclock.get().getStatus() == TimeClockStatus.OPEN){
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Registro de ponto já está aberto.");      
         }
 
