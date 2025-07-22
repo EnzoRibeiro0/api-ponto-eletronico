@@ -4,10 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pontoeletronico.model.dto.LoginDTO;
 import com.pontoeletronico.model.dto.ModifyPasswordDTO;
+import com.pontoeletronico.service.TimeClockService;
 import com.pontoeletronico.service.UserService;
 
 import jakarta.validation.Valid;
@@ -25,6 +27,9 @@ public class UserRestController {
     @Autowired
     private UserService service;
 
+    @Autowired
+    private TimeClockService timeClockService;
+
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody @Valid LoginDTO dto) {
         
@@ -37,5 +42,18 @@ public class UserRestController {
         
         return service.modifyPassword(dto);
     }
+
+    @PostMapping("/check-in-time/{workHour}")
+    public ResponseEntity<?> toClockIn(@RequestParam Long workHour) {
+        
+        return timeClockService.toClockIn(workHour);
+    }
+    
+    @PostMapping("/check-out-time")
+    public ResponseEntity<?> toClockIn() {
+        
+        return timeClockService.toClockOut();
+    }
+    
 
 }
