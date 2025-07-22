@@ -41,14 +41,18 @@ public class TimeClockService {
     public ResponseEntity<?> toClockIn(long workHour){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = (User) authentication.getPrincipal();
+      
+        Optional<TimeClock> timeclock = timeClockRepository.findLastTimeClockByUser(user.getId());
+        
+        if(timeclock.get().getCheckOutTime() == null){
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Registro de ponto já está aberto.");      
+        }
 
         Optional<WorkHours> hour = workHoursRepository.findById(workHour);
-        
+
         if (hour.isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Período de hora não existente.");
         }
-
-        // Fazer a validação se o ponto já está aberto
 
         LocalDate date = LocalDate.now();
         LocalTime checkInTime = LocalTime.now().withNano(0);

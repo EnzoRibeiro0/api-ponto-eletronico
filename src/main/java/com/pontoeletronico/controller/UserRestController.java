@@ -42,14 +42,16 @@ public class UserRestController {
         
         return service.modifyPassword(dto);
     }
-
+    
     @PostMapping("/check-in-time/{workHour}")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> toClockIn(@RequestParam Long workHour) {
         
         return timeClockService.toClockIn(workHour);
     }
     
     @PostMapping("/check-out-time")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> toClockIn() {
         
         return timeClockService.toClockOut();
