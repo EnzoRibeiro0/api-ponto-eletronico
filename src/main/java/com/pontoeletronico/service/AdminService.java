@@ -11,15 +11,21 @@ import org.springframework.stereotype.Service;
 
 import com.pontoeletronico.exceptions.Exceptions;
 import com.pontoeletronico.model.dto.RegisterForAdminsDTO;
+import com.pontoeletronico.model.dto.SetWorkHoursDTO;
 import com.pontoeletronico.model.entity.User;
+import com.pontoeletronico.model.entity.WorkHours;
 import com.pontoeletronico.model.projection.UserProjection;
 import com.pontoeletronico.repository.UserRepository;
+import com.pontoeletronico.repository.WorkHoursRepository;
 
 @Service
 public class AdminService {
     
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private WorkHoursRepository workHoursRepository;
     
 
     public ResponseEntity<?> registerUsers(RegisterForAdminsDTO dto){
@@ -84,8 +90,22 @@ public class AdminService {
         userRepository.save(activeUser);
         
         return ResponseEntity.status(HttpStatus.OK).body("Usuário ativado com sucesso.");
-
+        
     }
+    
+    
+    public ResponseEntity<?> registerWorkHours(SetWorkHoursDTO dto){
+
+        WorkHours workHours = new WorkHours();
+
+        workHours.setStartTime(dto.getStartTime());
+        workHours.setEndTime(dto.getEndTime());
+
+        workHoursRepository.save(workHours);
+
+        return ResponseEntity.status(HttpStatus.OK).body("Horário registrado com sucesso.");
+    }
+
 
     public List<UserProjection> listAllUsers(){
         return userRepository.findAllUsers();

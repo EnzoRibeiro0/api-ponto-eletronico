@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pontoeletronico.model.dto.RegisterForAdminsDTO;
+import com.pontoeletronico.model.dto.SetWorkHoursDTO;
 import com.pontoeletronico.model.projection.UserProjection;
 import com.pontoeletronico.service.AdminService;
 
@@ -49,6 +50,16 @@ public class AdminRestController {
         
         return service.activateUser(id);
     }
+    
+    
+    @PostMapping("/set-work-hours")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> setWorkHours(@RequestBody @Valid SetWorkHoursDTO dto) {
+        
+        return service.registerWorkHours(dto);
+    }
+    
+
     
     @GetMapping("/get-all-users")
     @PreAuthorize("hasRole('ADMIN')")
