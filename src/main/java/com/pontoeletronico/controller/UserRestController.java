@@ -2,6 +2,7 @@ package com.pontoeletronico.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,6 +32,7 @@ public class UserRestController {
     }
     
     @PutMapping("/modify-password")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> modifyPassword(@RequestBody @Valid ModifyPasswordDTO dto) {
         
         return service.modifyPassword(dto);

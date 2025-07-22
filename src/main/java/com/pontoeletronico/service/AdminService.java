@@ -1,5 +1,6 @@
 package com.pontoeletronico.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.pontoeletronico.exceptions.Exceptions;
 import com.pontoeletronico.model.dto.RegisterForAdminsDTO;
 import com.pontoeletronico.model.entity.User;
+import com.pontoeletronico.model.projection.UserProjection;
 import com.pontoeletronico.repository.UserRepository;
 
 @Service
@@ -83,6 +85,18 @@ public class AdminService {
         
         return ResponseEntity.status(HttpStatus.OK).body("Usuário ativado com sucesso.");
 
+    }
+
+    public List<UserProjection> listAllUsers(){
+        return userRepository.findAllUsers();
+    }
+
+    public List<UserProjection> listAllActiveUsers(){
+        return userRepository.findAllActiveUsers();
+    }
+    
+    public List<UserProjection> listAllInactiveUsers(){
+        return userRepository.findAllInactiveUsers();
     }
 
 }
